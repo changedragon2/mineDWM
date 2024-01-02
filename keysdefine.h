@@ -90,7 +90,7 @@ static const Key keys[] = {
 	{ Altkey|ShiftMask,               XK_h,       setmfact,         {.f = -0.05} },
 	{ Altkey|ShiftMask,               XK_l,       setmfact,         {.f = +0.05} },
   { Altkey|ShiftMask,               XK_space,   togglefloating,   {0} },
-  //{ Altkey,                         XK_f,       togglefullscreen, {0} },
+  { Altkey,                         XK_f,       togglefullscr, {0} },
 	{ Super,                          XK_Tab,     view,             {0} },
 
   /* layout */
