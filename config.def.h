@@ -183,6 +183,7 @@ static const BarRule barrules[] = {
 	{  0,        0,     BAR_ALIGN_RIGHT,  width_systray,            draw_systray,           click_systray,           NULL,                    "systray" },
 	{ -1,        0,     BAR_ALIGN_LEFT,   width_ltsymbol,           draw_ltsymbol,          click_ltsymbol,          NULL,                    "layout" },
 	{ statusmon, 0,     BAR_ALIGN_RIGHT,  width_status,             draw_status,            click_status,            NULL,                    "status" },
+	{  0,        0,     BAR_ALIGN_RIGHT,  width_xkb,                draw_xkb,               click_xkb,               NULL,                    "xkb" },
 	{ -1,        0,     BAR_ALIGN_NONE,   width_wintitle,           draw_wintitle,          click_wintitle,          NULL,                    "wintitle" },
 };
 
@@ -201,6 +202,11 @@ static const Layout layouts[] = {
 	{ "[M]",      monocle },
 };
 
+/* xkb frontend */
+static const char *xkb_layouts[]  = {
+	"en",
+	"ru",
+};
 
 #include "keysdefine.h"
 ///* key definitions */
@@ -243,6 +249,8 @@ static const Layout layouts[] = {
 //	{ MODKEY,                       XK_d,          incnmaster,             {.i = -1 } },
 //	{ MODKEY,                       XK_h,          setmfact,               {.f = -0.05} },
 //	{ MODKEY,                       XK_l,          setmfact,               {.f = +0.05} },
+//	{ MODKEY|ShiftMask,             XK_j,          movestack,              {.i = +1 } },
+//	{ MODKEY|ShiftMask,             XK_k,          movestack,              {.i = -1 } },
 //	{ MODKEY,                       XK_Return,     zoom,                   {0} },
 //	{ MODKEY,                       XK_Tab,        view,                   {0} },
 //	{ MODKEY|ShiftMask,             XK_c,          killclient,             {0} },
@@ -258,6 +266,8 @@ static const Layout layouts[] = {
 //	{ MODKEY,                       XK_period,     focusmon,               {.i = +1 } },
 //	{ MODKEY|ShiftMask,             XK_comma,      tagmon,                 {.i = -1 } },
 //	{ MODKEY|ShiftMask,             XK_period,     tagmon,                 {.i = +1 } },
+//	{ MODKEY|ControlMask,           XK_comma,      cyclelayout,            {.i = -1 } },
+//	{ MODKEY|ControlMask,           XK_period,     cyclelayout,            {.i = +1 } },
 //	TAGKEYS(                        XK_1,                                  0)
 //	TAGKEYS(                        XK_2,                                  1)
 //	TAGKEYS(                        XK_3,                                  2)
@@ -286,5 +296,5 @@ static const Layout layouts[] = {
 //	{ ClkTagBar,            MODKEY,              Button1,        tag,            {0} },
 //	{ ClkTagBar,            MODKEY,              Button3,        toggletag,      {0} },
 //};
-//
-//
+
+

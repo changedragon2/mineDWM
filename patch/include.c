@@ -11,6 +11,10 @@
 #include "bar_systray.c"
 
 /* Other patches */
+#include "cyclelayouts.c"
+#include "movestack.c"
+#include "pertag.c"
+#include "xkb.c"
 /* Layouts */
 #include "layout_facts.c"
 #include "layout_monocle.c"

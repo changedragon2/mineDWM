@@ -1,4 +1,4 @@
-//#include <X11/XF86keysym.h>
+#include <X11/XF86keysym.h>
 #define XK_3270_PrintScreen              0xfd1d
 #define XF86XK_AudioLowerVolume 0x1008FF11
 #define XF86XK_AudioMute        0x1008FF12
@@ -30,23 +30,33 @@ static const char *dmenucmd[] = {
 	NULL
 };
 static const char *termcmd[]  = { "alacritty", NULL };
-static const char *toggle_terminal[] = { "alacritty", NULL };
+static const char *toggle_terminal[] = { "wezterm", NULL };
 static const char *firefox[] = { "firefox", NULL };
 static const char *rofi[] = { "rofi", "-show", "drun" };
 /* print screen */
-//static const char *prtsr[] = { "maim", "-s", "$HOME/Pictures/Screenshots/$(date '+%Y-%m-%d-%H:%M:%S').png", NULL };
-//static const char *prtsr_full[] = { "maim", "$HOME/Pictures/Screenshots/$(date '+%Y-%m-%d-%H:%M:%S').png", NULL };
 static const char prtsr[] = "maim -s ~/Pictures/Screenshots/$(date '+%Y-%m-%d-%H:%M:%S').png";
 static const char prtsr_full[] = "maim  ~/Pictures/Screenshots/$(date '+%Y-%m-%d-%H:%M:%S').png";
+/* brightness */
+static const char light_up[] = "$HOME/bin/light up";
+static const char light_down[] = "$HOME/bin/light down";
+/* volume */
+static const char vol_up[] = "$HOME/bin/volume up";
+static const char vol_down[] = "$HOME/bin/volume down";
+static const char vol_toggle[] = "$HOME/bin/volume toggle";
+/* media play */
+static const char song_next[] = "$HOME/bin/songtoggle n";
+static const char song_prev[] = "$HOME/bin/songtoggle p";
+static const char song_toggle[] = "$HOME/bin/songtoggle t";
 
 
 
 static const Key keys[] = {
 	/* modifier                     key            function                argument */
   /* dwm */
-	{ControlMask|Altkey,          XK_q,       quit,           {0} },
+	{ControlMask|Super,           XK_q,       quit,           {0} },
   /* love */
-  { Super,                      XK_Return,  spawn,          {.v = toggle_terminal} },
+  { Super,                      XK_Return,  spawn,          {.v = termcmd} },
+  { Super|ShiftMask,            XK_Return,  spawn,          {.v = toggle_terminal} },
   { Super,                      XK_q,       spawn,          {.v = firefox} },
   { Super,                      XK_e,       spawn,          SHCMD("nemo") },
   { Super,                      XK_c,       spawn,          SHCMD("linuxqq") },
@@ -59,20 +69,24 @@ static const Key keys[] = {
   /* shortcuts */
   { Super,                      XK_u,       spawn,          SHCMD(prtsr_full) },
   { Super|ShiftMask,            XK_u,       spawn,          SHCMD(prtsr) },
-  //{ Super,                      XK_u,       spawn,          SHCMD("maim -s ~/Pictures/Screenshots/$(date '+%Y-%m-%d-%H:%M:%S').png") },
-  //{ Super|ShiftMask,            XK_u,       spawn,          SHCMD("maim ~/Pictures/Screenshots/$(date '+%Y-%m-%d-%H:%M:%S').png") },
   /* print screen */
   { 0,    XK_3270_PrintScreen,              spawn, SHCMD("scrot")},     // 截屏
-  { 0,    XF86XK_AudioRaiseVolume,          spawn,          SHCMD("volume up") },
-  { 0,    XF86XK_AudioLowerVolume,          spawn,          SHCMD("volume down") },
-  { 0,    XF86XK_AudioMute,                 spawn,          SHCMD("volume toggle") },
+  /* media buttiono */
+  { 0,    XF86XK_MonBrightnessDown,            spawn,          SHCMD(light_down) },
+  { 0,    XF86XK_MonBrightnessUp,              spawn,          SHCMD(light_up) },
+  { 0,    XF86XK_AudioLowerVolume,             spawn,          SHCMD(vol_down) },
+  { 0,    XF86XK_AudioMute,                    spawn,          SHCMD(vol_toggle) },
+  { 0,    XF86XK_AudioRaiseVolume,             spawn,          SHCMD(vol_up) },
+  { 0,    XF86XK_AudioPrev,                    spawn,          SHCMD(song_prev) },
+  { 0,    XF86XK_AudioPlay,                    spawn,          SHCMD(song_toggle) },
+  { 0,    XF86XK_AudioNext,                    spawn,          SHCMD(song_next) },
   /* client */
 	{ Altkey|ShiftMask,               XK_q,       killclient,       {0} },
 	{ Altkey|ShiftMask,               XK_Return,  zoom,             {0} },
   { Altkey,                         XK_j,       focusstack,       {.i = +1} },
   { Altkey,                         XK_k,       focusstack,       {.i = -1} },
-  //{ Altkey|ShiftMask,               XK_j,       movestack,        {.i = +1} },
-  //{ Altkey|ShiftMask,               XK_k,       movestack,        {.i = -1} },
+  { Altkey|ShiftMask,               XK_j,       movestack,        {.i = +1} },
+  { Altkey|ShiftMask,               XK_k,       movestack,        {.i = -1} },
 	{ Altkey|ShiftMask,               XK_h,       setmfact,         {.f = -0.05} },
 	{ Altkey|ShiftMask,               XK_l,       setmfact,         {.f = +0.05} },
   { Altkey|ShiftMask,               XK_space,   togglefloating,   {0} },
@@ -83,8 +97,8 @@ static const Key keys[] = {
 	{ Super,                      XK_t,       setlayout,      {.v = &layouts[0]} },
 	{ Super,                      XK_f,       setlayout,      {.v = &layouts[1]} },
 	{ Super,                      XK_m,       setlayout,      {.v = &layouts[2]} },
-	//{ Super,                      XK_p,       cyclelayout,            {.i = -1 } },
-	//{ Super,                      XK_n,       cyclelayout,            {.i = +1 } },
+	{ Super,                      XK_p,       cyclelayout,            {.i = -1 } },
+	{ Super,                      XK_n,       cyclelayout,            {.i = +1 } },
 
 	{ Super,                       XK_i,          incnmaster,             {.i = +1 } },
 	{ Super,                       XK_d,          incnmaster,             {.i = -1 } },

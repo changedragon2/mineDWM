@@ -7,7 +7,7 @@ width_wintitle(Bar *bar, BarArg *a)
 int
 draw_wintitle(Bar *bar, BarArg *a)
 {
-	int x = a->x, w = a->w;
+	int x = a->x + lrpad / 2, w = a->w - lrpad;
 	Monitor *m = bar->mon;
 	Client *c = m->sel;
 
