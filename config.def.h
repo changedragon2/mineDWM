@@ -130,7 +130,6 @@ static char *tagicons[][NUMTAGS] =
 	[ALT_TAGS_DECORATION] = { "<1>", "<2>", "<3>", "<4>", "<5>", "<6>", "<7>", "<8>", "<9>" },
 };
 
-
 /* There are two options when it comes to per-client rules:
  *  - a typical struct table or
  *  - using the RULE macro
@@ -162,6 +161,16 @@ static const Rule rules[] = {
 	RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
 	RULE(.class = "Gimp", .tags = 1 << 4)
 	RULE(.class = "Firefox", .tags = 1 << 7)
+  RULE(.class = "Sxiv", .isfloating = 1)
+  RULE(.class = "mpv", .isfloating = 1)
+  RULE(.class = "Nemo", .isfloating = 1)
+  RULE(.class = "QQ", .isfloating = 1)
+  RULE(.class = "Gpick", .isfloating = 1)
+  RULE(.class = "kitty", .isfloating = 1)
+  /* RULE(.class = "org.wezfurlong.wezterm", .isfloating = 1) */
+  RULE(.class = "Qalculate-gtk", .isfloating = 1)
+  RULE(.class = "sdlpal-linux", .isfloating = 1)
+  RULE(.class = "xdman", .isfloating = 1)
 };
 
 
@@ -201,6 +210,17 @@ static const Layout layouts[] = {
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
+};
+static const int taglayouts[] = {
+  0, /* tag1, layouts[0] */
+  2, /* tag2, layouts[2] */
+  1, /* tag3, layouts[1] */
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
 };
 
 /* xkb frontend */
