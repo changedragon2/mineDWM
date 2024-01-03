@@ -47,6 +47,8 @@ static const char vol_toggle[] = "$HOME/bin/volume toggle";
 static const char song_next[] = "$HOME/bin/songtoggle n";
 static const char song_prev[] = "$HOME/bin/songtoggle p";
 static const char song_toggle[] = "$HOME/bin/songtoggle t";
+/* random wallpaper */
+static const char taggle_wallpaper[] = "$HOME/bin/tgwallpaper";
 
 
 
@@ -72,14 +74,17 @@ static const Key keys[] = {
   /* print screen */
   { 0,    XK_3270_PrintScreen,              spawn, SHCMD("scrot")},     // 截屏
   /* media buttiono */
-  { 0,    XF86XK_MonBrightnessDown,            spawn,          SHCMD(light_down) },
-  { 0,    XF86XK_MonBrightnessUp,              spawn,          SHCMD(light_up) },
-  { 0,    XF86XK_AudioLowerVolume,             spawn,          SHCMD(vol_down) },
-  { 0,    XF86XK_AudioMute,                    spawn,          SHCMD(vol_toggle) },
-  { 0,    XF86XK_AudioRaiseVolume,             spawn,          SHCMD(vol_up) },
-  { 0,    XF86XK_AudioPrev,                    spawn,          SHCMD(song_prev) },
-  { 0,    XF86XK_AudioPlay,                    spawn,          SHCMD(song_toggle) },
-  { 0,    XF86XK_AudioNext,                    spawn,          SHCMD(song_next) },
+  { 0,                          XF86XK_MonBrightnessDown,     spawn,          SHCMD(light_down) },
+  { 0,                          XF86XK_MonBrightnessUp,       spawn,          SHCMD(light_up) },
+  { 0,                          XF86XK_AudioLowerVolume,      spawn,          SHCMD(vol_down) },
+  { 0,                          XF86XK_AudioMute,             spawn,          SHCMD(vol_toggle) },
+  { 0,                          XF86XK_AudioRaiseVolume,      spawn,          SHCMD(vol_up) },
+  { 0,                          XF86XK_AudioPrev,             spawn,          SHCMD(song_prev) },
+  { 0,                          XF86XK_AudioPlay,             spawn,          SHCMD(song_toggle) },
+  { 0,                          XF86XK_AudioNext,             spawn,          SHCMD(song_next) },
+  { Altkey,                     XK_F11,                       spawn,          SHCMD(taggle_wallpaper) },
+  { 0,                          XF86XK_Calculator,            spawn,          SHCMD("qalculate-gtk") },
+  { 0,                          XF86XK_Launch2,               spawn,          SHCMD("obs") },
   /* client */
 	{ Altkey|ShiftMask,               XK_q,       killclient,       {0} },
 	{ Altkey|ShiftMask,               XK_Return,  zoom,             {0} },
