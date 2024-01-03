@@ -90,8 +90,12 @@ static const Key keys[] = {
 	{ Altkey|ShiftMask,               XK_h,       setmfact,         {.f = -0.05} },
 	{ Altkey|ShiftMask,               XK_l,       setmfact,         {.f = +0.05} },
   { Altkey|ShiftMask,               XK_space,   togglefloating,   {0} },
-  { Altkey,                         XK_f,       togglefullscr, {0} },
+  { Altkey,                         XK_f,       togglefullscr,    {0} },
 	{ Super,                          XK_Tab,     view,             {0} },
+  { Altkey,                         XK_e,       hidewin,          {0} },
+  { Altkey|ShiftMask,               XK_e,       restorewin,       {0} },
+  { Altkey,                         XK_o,       hideotherwins,    {0} },
+  { Altkey|ShiftMask,               XK_o,       restoreotherwins, {0} },
 
   /* layout */
 	{ Super,                      XK_t,       setlayout,      {.v = &layouts[0]} },
