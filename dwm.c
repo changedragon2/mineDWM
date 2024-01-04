@@ -347,6 +347,7 @@ static void tag(const Arg *arg);
 static void tagmon(const Arg *arg);
 static void togglebar(const Arg *arg);
 static void togglefloating(const Arg *arg);
+static void centerfloating(const Arg *arg);
 static void togglefullscr(const Arg *arg);
 static void toggletag(const Arg *arg);
 static void toggleview(const Arg *arg);
@@ -2366,6 +2367,23 @@ togglefloating(const Arg *arg)
 	}
 	arrange(c->mon);
 
+}
+
+void
+centerfloating(const Arg *arg)
+{
+  if (!selmon->sel)
+    return;
+  if (selmon->sel->isfloating) {
+    resizeclient(selmon->sel,
+        (selmon->mw - selmon->sel->w) / 2,
+        (selmon->mh - selmon->sel->h) / 2,
+        selmon->sel->w,
+        selmon->sel->h);
+  }
+  else
+    return;
+  arrange(selmon->sel->mon);
 }
 
 void

@@ -45,7 +45,7 @@ static const char vol_down[] = "$HOME/bin/volume down";
 static const char vol_toggle[] = "$HOME/bin/volume toggle";
 /* media play */
 static const char song_next[] = "$HOME/bin/songtoggle n";
-static const char song_prev[] = "$HOME/bin/songtoggle p";
+static const char song_prev[] = "$HOME/bin/songtoggle b";
 static const char song_toggle[] = "$HOME/bin/songtoggle t";
 /* random wallpaper */
 static const char taggle_wallpaper[] = "$HOME/bin/tgwallpaper";
@@ -96,6 +96,7 @@ static const Key keys[] = {
 	{ Altkey|ShiftMask,               XK_l,       setmfact,         {.f = +0.05} },
   { Altkey|ShiftMask,               XK_space,   togglefloating,   {0} },
   { Altkey,                         XK_f,       togglefullscr,    {0} },
+  { Altkey,                         XK_m,       centerfloating,   {0} },
 	{ Super,                          XK_Tab,     view,             {0} },
   { Altkey,                         XK_e,       hidewin,          {0} },
   { Altkey|ShiftMask,               XK_e,       restorewin,       {0} },
