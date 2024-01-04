@@ -159,18 +159,26 @@ static const Rule rules[] = {
 	RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
 	RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1)
 	RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
-	RULE(.class = "Gimp", .tags = 1 << 4)
-	RULE(.class = "Firefox", .tags = 1 << 7)
-  RULE(.class = "Sxiv", .isfloating = 1)
+  /* love */
+	/* RULE(.class = "firefox", .tags = 1 << 1) */
   RULE(.class = "mpv", .isfloating = 1)
+  RULE(.class = "obsidian", .isfloating = 1, .tags = 1 << 2)
   RULE(.class = "Nemo", .isfloating = 1)
-  RULE(.class = "QQ", .isfloating = 1)
+  RULE(.class = "QQ", .isfloating = 1, .tags = 1 << 2)
   RULE(.class = "Gpick", .isfloating = 1)
+  /* terminal */
   RULE(.class = "kitty", .isfloating = 1)
   /* RULE(.class = "org.wezfurlong.wezterm", .isfloating = 1) */
-  RULE(.class = "Qalculate-gtk", .isfloating = 1)
+  /* game */
   RULE(.class = "sdlpal-linux", .isfloating = 1)
+  /* tools */
+  RULE(.class = "Sxiv", .isfloating = 1)
+  RULE(.class = "feh", .isfloating = 1)
+	RULE(.class = "Gimp", .tags = 1 << 4)
+  RULE(.class = "Qalculate-gtk", .isfloating = 1)
   RULE(.class = "xdman", .isfloating = 1)
+  RULE(.class = "Blueman-manager", .isfloating = 1)
+  RULE(.class = "copyq", .isfloating = 1)
 };
 
 
