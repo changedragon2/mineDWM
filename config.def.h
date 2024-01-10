@@ -166,11 +166,13 @@ static const Rule rules[] = {
   RULE(.class = "Nemo", .isfloating = 1)
   RULE(.class = "QQ", .isfloating = 1, .tags = 1 << 2)
   RULE(.class = "Gpick", .isfloating = 1)
+  RULE(.class = "TelegramDesktop", .isfloating = 1)
   /* terminal */
   RULE(.class = "kitty", .isfloating = 1)
   /* RULE(.class = "org.wezfurlong.wezterm", .isfloating = 1) */
   /* game */
   RULE(.class = "sdlpal-linux", .isfloating = 1)
+  RULE(.class = "Citra", .isfloating = 1)
   /* tools */
   RULE(.class = "Sxiv", .isfloating = 1)
   RULE(.class = "feh", .isfloating = 1)
@@ -179,6 +181,9 @@ static const Rule rules[] = {
   RULE(.class = "xdman", .isfloating = 1)
   RULE(.class = "Blueman-manager", .isfloating = 1)
   RULE(.class = "copyq", .isfloating = 1)
+  RULE(.class = "Xmind", .isfloating = 1)
+  RULE(.class = "KeePassXC", .isfloating = 1)
+  RULE(.class = "Com.github.xournalpp.xournalpp", .isfloating = 1)
 };
 
 
