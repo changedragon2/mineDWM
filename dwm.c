@@ -212,6 +212,7 @@ static void tagmon(const Arg *arg);
 static void tile(Monitor *m);
 static void togglebar(const Arg *arg);
 static void togglefloating(const Arg *arg);
+static void centerfloating(const Arg *arg);
 static void toggletag(const Arg *arg);
 static void toggleview(const Arg *arg);
 static void unfocus(Client *c, int setfocus);
@@ -1715,6 +1716,21 @@ togglefloating(const Arg *arg)
 		resize(selmon->sel, selmon->sel->x, selmon->sel->y,
 			selmon->sel->w, selmon->sel->h, 0);
 	arrange(selmon);
+}
+void
+centerfloating(const Arg *arg)
+{
+  if (!selmon->sel || selmon->sel->isfullscreen)
+    return;
+  if (selmon->sel->isfloating)
+    resizeclient(selmon->sel,
+        (selmon->mw - selmon->sel->w) / 2,
+        (selmon->mh - selmon->sel->h) / 2,
+        selmon->sel->w,
+        selmon->sel->h);
+  else
+    return;
+  arrange(selmon->sel->mon);
 }
 
 void
