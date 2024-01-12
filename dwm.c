@@ -184,6 +184,7 @@ static void maprequest(XEvent *e);
 static void monocle(Monitor *m);
 static void motionnotify(XEvent *e);
 static void movemouse(const Arg *arg);
+static void movestack(const Arg *arg);
 static Client *nexttiled(Client *c);
 static void pop(Client *c);
 static void propertynotify(XEvent *e);
@@ -1193,6 +1194,55 @@ movemouse(const Arg *arg)
 		selmon = m;
 		focus(NULL);
 	}
+}
+
+void
+movestack(const Arg *arg)
+{
+  Client *tar, *prevc, *prevt, *i;
+  tar = prevc = prevt = i = NULL;
+
+  if (arg->i > 0){
+    /* find the target client after selmon->sel */
+    for (tar = selmon->sel->next; tar && (!ISVISIBLE(tar) || tar->isfloating); tar = tar->next)
+      ;
+    if (!tar)
+      for (tar = selmon->clients; tar && (!ISVISIBLE(tar) || tar->isfloating); tar = tar->next)
+        ;
+  }
+  else {
+    /* find the target client before selmon->sel */
+    for (i = selmon->clients; i != selmon->sel; i = i->next)
+      if (ISVISIBLE(i) && !i->isfloating)
+        tar = i;
+    if (!tar)
+      for (i = selmon->sel->next; i; i = i->next)
+        if (ISVISIBLE(i) && !i->isfloating)
+          tar = i;
+  }
+  /* find the client before selmon->sel and target */
+  for (i = selmon->clients; i && (!prevc || !prevt); i = i->next){
+    if (i->next == selmon->sel)
+      prevc = i;
+    if (i->next == tar)
+      prevt = i;
+  }
+  /* swap target client and selmon->sel */
+  if (tar && tar != selmon->sel){
+    i = (selmon->sel->next == tar)? selmon->sel : selmon->sel->next;
+    selmon->sel->next = (tar->next == selmon->sel)? tar: tar->next;
+    tar->next = i;
+    if (prevc && prevc != tar)
+      prevc->next = tar;
+    if (prevt && prevt != selmon->sel)
+      prevt->next = selmon->sel;
+    if (selmon->sel == selmon->clients)
+      selmon->clients = tar;
+    else
+      if (tar == selmon->clients)
+        selmon->clients = selmon->sel;
+    arrange(selmon);
+  }
 }
 
 Client *

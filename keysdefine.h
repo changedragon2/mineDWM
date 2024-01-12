@@ -105,8 +105,8 @@ static const Key keys[] = {
 	{ Altkey|ShiftMask,               XK_Return,  zoom,             {0} },
   { Altkey,                         XK_j,       focusstack,       {.i = +1} },
   { Altkey,                         XK_k,       focusstack,       {.i = -1} },
-  /* { Altkey|ShiftMask,               XK_j,       movestack,        {.i = +1} }, */
-  /* { Altkey|ShiftMask,               XK_k,       movestack,        {.i = -1} }, */
+  { Altkey|ShiftMask,               XK_j,       movestack,        {.i = +1} },
+  { Altkey|ShiftMask,               XK_k,       movestack,        {.i = -1} },
 	{ Altkey|ShiftMask,               XK_h,       setmfact,         {.f = -0.05} },
 	{ Altkey|ShiftMask,               XK_l,       setmfact,         {.f = +0.05} },
   { Altkey|ShiftMask,               XK_space,   togglefloating,   {0} },
