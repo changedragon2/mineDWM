@@ -1722,8 +1722,10 @@ togglefloating(const Arg *arg)
 void
 togglefullscreen(const Arg *arg)
 {
-  if (selmon->sel)
+  if (selmon->sel){
     setfullscreen(selmon->sel, !selmon->sel->isfullscreen);
+    arrange(selmon);
+  }
 }
 void
 centerfloating(const Arg *arg)
