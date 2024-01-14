@@ -1782,7 +1782,7 @@ centerfloating(const Arg *arg)
 {
   if (!selmon->sel || selmon->sel->isfullscreen)
     return;
-  if (selmon->sel->isfloating)
+  if (selmon->sel->isfloating || !strcmp(selmon->lt[selmon->sellt]->symbol, "<./><"))
     resizeclient(selmon->sel,
         (selmon->mw - selmon->sel->w) / 2,
         (selmon->mh - selmon->sel->h) / 2,
