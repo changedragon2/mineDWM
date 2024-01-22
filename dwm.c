@@ -651,17 +651,11 @@ void
 cyclelayout(const Arg *arg)
 {
   int i;
-  int numtag = LENGTH(layouts);
+  int numlts = LENGTH(layouts);
   for (i = 0; i < numtag && 
       selmon->pertag->taglts[selmon->pertag->curtag][selmon->sellt] != &layouts[i]; i++)
     ;
-  if (arg->i > 0)
-    i = (i + 1) % numtag;
-  else {
-    i = i - 1;
-    if (i < 0)
-      i += numtag;
-  }
+  i = (i + arg->i + numtag) % numlts;
   selmon->pertag->taglts[selmon->pertag->curtag][selmon->sellt] = &layouts[i];
   selmon->lt[selmon->sellt] = selmon->pertag->taglts[selmon->pertag->curtag][selmon->sellt];
   strncpy(selmon->ltsymbol, selmon->lt[selmon->sellt]->symbol, sizeof selmon->ltsymbol);
