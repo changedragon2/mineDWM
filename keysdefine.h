@@ -122,8 +122,9 @@ static const Key keys[] = {
 	{ Super,                      XK_t,       setlayout,      {.v = &layouts[0]} },
 	{ Super,                      XK_f,       setlayout,      {.v = &layouts[1]} },
 	{ Super,                      XK_m,       setlayout,      {.v = &layouts[2]} },
-	/* { Super,                      XK_p,       cyclelayout,            {.i = -1 } }, */
-	/* { Super,                      XK_n,       cyclelayout,            {.i = +1 } }, */
+	{ Super,                      XK_p,       cyclelayout,            {.i = -1 } },
+	{ Super,                      XK_n,       cyclelayout,            {.i = +1 } },
+  { Super|ShiftMask,            XK_space,   setlayout,                     {0} },
 
 	{ Altkey|ShiftMask,            XK_i,          incnmaster,             {.i = +1 } },
 	{ Altkey|ShiftMask,            XK_d,          incnmaster,             {.i = -1 } },
