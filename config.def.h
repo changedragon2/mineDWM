@@ -20,6 +20,10 @@ static const char *colors[][3]      = {
 
 /* tagging */
 static const char *tags[] = { "乾", "坤", "离", "坎", "兑", "巽", "艮", "震", "卦" };
+static const int taglayouts[2][LENGTH(tags)] = {
+  { 0, 2, 1, 0, 0, 0, 0, 0, 0 },
+  { 0, 0, 0, 1, 1, 1, 1, 1, 2 }
+};
 
 static const Rule rules[] = {
 	/* xprop(1):

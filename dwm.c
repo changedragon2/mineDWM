@@ -111,6 +111,7 @@ typedef struct {
 	void (*arrange)(Monitor *);
 } Layout;
 
+typedef struct Pertag Pertag;
 struct Monitor {
 	char ltsymbol[16];
 	float mfact;
@@ -130,6 +131,7 @@ struct Monitor {
 	Monitor *next;
 	Window barwin;
 	const Layout *lt[2];
+  Pertag *pertag;
 };
 
 typedef struct {
@@ -274,6 +276,15 @@ static Window root, wmcheckwin;
 
 /* configuration, allows nested code to access above variables */
 #include "config.h"
+
+struct Pertag { /* if LENGTH(tags) == 9, then tag 0 is all, tag 1~9, total 10 */
+  unsigned int curtag;
+  const Layout *taglts[LENGTH(tags) + 1][2];
+  unsigned int sellts[LENGTH(tags) + 1];
+  int showbars[LENGTH(tags) + 1];
+  float mfacts[LENGTH(tags) + 1];
+  int nmasters[LENGTH(tags) + 1];
+};
 
 /* compile-time check if all tags fit into an unsigned int bit array. */
 struct NumTags { char limitexceeded[LENGTH(tags) > 31 ? -1 : 1]; };
@@ -513,6 +524,7 @@ cleanupmon(Monitor *mon)
 	}
 	XUnmapWindow(dpy, mon->barwin);
 	XDestroyWindow(dpy, mon->barwin);
+  free(mon->pertag);
 	free(mon);
 }
 
@@ -648,6 +660,27 @@ createmon(void)
 	m->lt[0] = &layouts[0];
 	m->lt[1] = &layouts[1 % LENGTH(layouts)];
 	strncpy(m->ltsymbol, layouts[0].symbol, sizeof m->ltsymbol);
+  m->pertag = (Pertag *)ecalloc(1, sizeof(Pertag));
+  if (!m->pertag)
+    die("failed to allocate mem for pertag\n");
+  m->pertag->curtag = 1;
+  unsigned int i;
+  for (i = 0; i <= LENGTH(tags); i++){
+    /* m->pertag->taglts[i][0] = m->lt[0]; */
+    /* m->pertag->taglts[i][1] = m->lt[1]; */
+    if (i >= 1){
+      m->pertag->taglts[i][0] = &layouts[taglayouts[0][i-1]];
+      m->pertag->taglts[i][1] = &layouts[taglayouts[1][i-1]];
+    }
+    else {
+      m->pertag->taglts[i][0] = &layouts[0];
+      m->pertag->taglts[i][1] = &layouts[1];
+    }
+    m->pertag->sellts[i] = m->sellt;
+    m->pertag->showbars[i] = m->showbar;
+    m->pertag->mfacts[i] = m->mfact;
+    m->pertag->nmasters[i] = m->nmaster;
+  }
 	return m;
 }
 
@@ -974,7 +1007,8 @@ grabkeys(void)
 void
 incnmaster(const Arg *arg)
 {
-	selmon->nmaster = MAX(selmon->nmaster + arg->i, 0);
+  selmon->pertag->nmasters[selmon->pertag->curtag] = MAX(selmon->nmaster + arg->i, 0);
+  selmon->nmaster = selmon->pertag->nmasters[selmon->pertag->curtag];
 	arrange(selmon);
 }
 
@@ -1554,9 +1588,14 @@ void
 setlayout(const Arg *arg)
 {
 	if (!arg || !arg->v || arg->v != selmon->lt[selmon->sellt])
-		selmon->sellt ^= 1;
+		/* selmon->sellt ^= 1; */
+    /* selmon->pertag->sellts[selmon->pertag->curtag] ^= 1; */
+    /* selmon->sellt = selmon->pertag->sellts[selmon->pertag->curtag]; */
+    selmon->sellt = selmon->pertag->sellts[selmon->pertag->curtag] ^= 1;
 	if (arg && arg->v)
-		selmon->lt[selmon->sellt] = (Layout *)arg->v;
+		/* selmon->lt[selmon->sellt] = (Layout *)arg->v; */
+    selmon->pertag->taglts[selmon->pertag->curtag][selmon->sellt] = (Layout *)arg->v;
+  selmon->lt[selmon->sellt] = selmon->pertag->taglts[selmon->pertag->curtag][selmon->sellt];
 	strncpy(selmon->ltsymbol, selmon->lt[selmon->sellt]->symbol, sizeof selmon->ltsymbol);
 	if (selmon->sel)
 		arrange(selmon);
@@ -1575,7 +1614,8 @@ setmfact(const Arg *arg)
 	f = arg->f < 1.0 ? arg->f + selmon->mfact : arg->f - 1.0;
 	if (f < 0.05 || f > 0.95)
 		return;
-	selmon->mfact = f;
+  selmon->pertag->mfacts[selmon->pertag->curtag] = f;
+  selmon->mfact = selmon->pertag->mfacts[selmon->pertag->curtag];
 	arrange(selmon);
 }
 
@@ -1749,7 +1789,8 @@ tile(Monitor *m)
 void
 togglebar(const Arg *arg)
 {
-	selmon->showbar = !selmon->showbar;
+  selmon->pertag->showbars[selmon->pertag->curtag] = !selmon->showbar;
+  selmon->showbar = selmon->pertag->showbars[selmon->pertag->curtag];
 	updatebarpos(selmon);
 	XMoveResizeWindow(dpy, selmon->barwin, selmon->wx, selmon->by, selmon->ww, bh);
 	arrange(selmon);
@@ -1814,7 +1855,22 @@ toggleview(const Arg *arg)
 	unsigned int newtagset = selmon->tagset[selmon->seltags] ^ (arg->ui & TAGMASK);
 
 	if (newtagset) {
-		selmon->tagset[selmon->seltags] = newtagset;
+		selmon->tagset[selmon->seltags] = newtagset; 
+    if (newtagset == ~0)
+      selmon->pertag->curtag = 0;
+    if (!(newtagset & 1 << (selmon->pertag->curtag - 1))){
+      int i;
+      for (i = 0; !(newtagset & 1 << i); i++)
+        ;
+      selmon->pertag->curtag = i + 1;
+    }
+    selmon->sellt = selmon->pertag->sellts[selmon->pertag->curtag];
+    selmon->lt[selmon->sellt] = selmon->pertag->taglts[selmon->pertag->curtag][selmon->sellt];
+    selmon->lt[selmon->sellt^1] = selmon->pertag->taglts[selmon->pertag->curtag][selmon->sellt^1];
+    if (selmon->showbar != selmon->pertag->showbars[selmon->pertag->curtag])
+      togglebar(NULL);
+    selmon->mfact = selmon->pertag->mfacts[selmon->pertag->curtag];
+    selmon->nmaster = selmon->pertag->nmasters[selmon->pertag->curtag];
 		focus(NULL);
 		arrange(selmon);
 	}
@@ -2111,11 +2167,27 @@ updatewmhints(Client *c)
 void
 view(const Arg *arg)
 {
+  int i;
 	if ((arg->ui & TAGMASK) == selmon->tagset[selmon->seltags])
 		return;
 	selmon->seltags ^= 1; /* toggle sel tagset */
-	if (arg->ui & TAGMASK)
+	if (arg->ui & TAGMASK){
 		selmon->tagset[selmon->seltags] = arg->ui & TAGMASK;
+    if (arg->ui == ~0)
+      selmon->pertag->curtag = 0;
+    else {
+      for (i = 0; !(arg->ui & 1 << i); i++)
+        ;
+      selmon->pertag->curtag = i + 1;
+    }
+  }
+  selmon->sellt = selmon->pertag->sellts[selmon->pertag->curtag];
+  selmon->lt[selmon->sellt] = selmon->pertag->taglts[selmon->pertag->curtag][selmon->sellt];
+  selmon->lt[selmon->sellt^1] = selmon->pertag->taglts[selmon->pertag->curtag][selmon->sellt^1];
+  if (selmon->showbar != selmon->pertag->showbars[selmon->pertag->curtag])
+    togglebar(NULL);
+  selmon->mfact = selmon->pertag->mfacts[selmon->pertag->curtag];
+  selmon->nmaster = selmon->pertag->nmasters[selmon->pertag->curtag];
 	focus(NULL);
 	arrange(selmon);
 }
