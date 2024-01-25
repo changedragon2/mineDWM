@@ -93,7 +93,7 @@ struct Client {
 	int basew, baseh, incw, inch, maxw, maxh, minw, minh, hintsvalid;
 	int bw, oldbw;
 	unsigned int tags;
-	int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen;
+	int isfixed, isfloating, isalwaysontop, isurgent, neverfocus, oldstate, isfullscreen;
 	Client *next;
 	Client *snext;
 	Monitor *mon;
@@ -141,6 +141,7 @@ typedef struct {
 	const char *title;
 	unsigned int tags;
 	int isfloating;
+  int isalwaysontop;
 	int monitor;
 } Rule;
 
@@ -217,6 +218,7 @@ static void tagmon(const Arg *arg);
 static void tile(Monitor *m);
 static void togglebar(const Arg *arg);
 static void togglefloating(const Arg *arg);
+static void togglealwaysontop(const Arg *arg);
 static void togglefullscreen(const Arg *arg);
 static void centerfloating(const Arg *arg);
 static void toggletag(const Arg *arg);
@@ -242,7 +244,7 @@ static int xerrordummy(Display *dpy, XErrorEvent *ee);
 static int xerrorstart(Display *dpy, XErrorEvent *ee);
 static void xinitvisual();
 static void zoom(const Arg *arg);
-#include "awesome.c"
+#include "layouts.c"
 /* variables */
 static const char broken[] = "broken";
 static char stext[256];
@@ -309,6 +311,7 @@ applyrules(Client *c)
 
 	/* rule matching */
 	c->isfloating = 0;
+  c->isalwaysontop = 0;
 	c->tags = 0;
 	XGetClassHint(dpy, c->win, &ch);
 	class    = ch.res_class ? ch.res_class : broken;
@@ -321,6 +324,7 @@ applyrules(Client *c)
 		&& (!r->instance || strstr(instance, r->instance)))
 		{
 			c->isfloating = r->isfloating;
+      c->isalwaysontop = r->isalwaysontop;
 			c->tags |= r->tags;
 			for (m = mons; m && m->num != r->monitor; m = m->next);
 			if (m)
@@ -801,8 +805,11 @@ drawbar(Monitor *m)
 		if (m->sel) {
 			drw_setscheme(drw, scheme[m == selmon ? SchemeTitleSel : SchemeTitleNorm]);
 			drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0);
-			if (m->sel->isfloating)
+			if (m->sel->isfloating){
 				drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
+        if (m->sel->isalwaysontop)
+          drw_rect(drw, x + boxs, bh - boxw, boxw, boxw, 0, 0);
+      }
 		} else {
 			drw_setscheme(drw, scheme[SchemeTitleNorm]);
 			drw_rect(drw, x, 0, w, bh, 1, 1);
@@ -1469,6 +1476,15 @@ restack(Monitor *m)
 		return;
 	if (m->sel->isfloating || !m->lt[m->sellt]->arrange)
 		XRaiseWindow(dpy, m->sel->win);
+
+  /* raise the aot window */
+  for (Monitor *mon = mons; mon; mon = mon->next){
+    for (c = mon->clients; c; c = c->next){
+      if (c->isalwaysontop)
+        XRaiseWindow(dpy, c->win);
+    }
+  }
+
 	if (m->lt[m->sellt]->arrange) {
 		wc.stack_mode = Below;
 		wc.sibling = m->barwin;
@@ -1834,7 +1850,20 @@ togglefloating(const Arg *arg)
 	if (selmon->sel->isfloating)
 		resize(selmon->sel, selmon->sel->x, selmon->sel->y,
 			selmon->sel->w, selmon->sel->h, 0);
+  else
+    selmon->sel->isalwaysontop = 0;
 	arrange(selmon);
+}
+
+void
+togglealwaysontop(const Arg *arg)
+{
+  if (!selmon->sel)
+    return;
+  if (selmon->sel->isfullscreen)
+    return;
+  selmon->sel->isalwaysontop = !selmon->sel->isalwaysontop;
+  arrange(selmon);
 }
 
 void

@@ -114,10 +114,10 @@ static const Key keys[] = {
   { Altkey,                     XK_m,           centerfloating,          {0} },
   { Altkey,                     XK_t,           togglealwaysontop,       {0} },
 	{ Super,                      XK_Tab,         view,                    {0} },
-  { Altkey,                     XK_e,       hidewin,                     {0} },
-  { Altkey|ShiftMask,           XK_e,       restorewin,                  {0} },
-  { Altkey,                     XK_o,       hideotherwins,               {0} },
-  { Altkey|ShiftMask,           XK_o,       restoreotherwins,            {0} },
+  /* { Altkey,                     XK_e,       hidewin,                     {0} }, */
+  /* { Altkey|ShiftMask,           XK_e,       restorewin,                  {0} }, */
+  /* { Altkey,                     XK_o,       hideotherwins,               {0} }, */
+  /* { Altkey|ShiftMask,           XK_o,       restoreotherwins,            {0} }, */
 
   /* layout */
 	{ Super,                      XK_t,       setlayout,      {.v = &layouts[0]} },
