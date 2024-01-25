@@ -68,55 +68,56 @@ static const char taggle_wallpaper[] = "$HOME/bin/tgwallpaper";
 
 
 static const Key keys[] = {
-	/* modifier                     key            function                argument */
+	/* modifier                     key           function             argument */
   /* dwm */
-	{ControlMask|Super,           XK_q,       quit,           {0} },
+	{ControlMask|Super,           XK_q,           quit,           {0} },
   /* love */
-  { Super,                      XK_Return,  spawn,          {.v = termcmd} },
-  { Super|ShiftMask,            XK_Return,  spawn,          {.v = toggle_terminal} },
-  { Super,                      XK_q,       spawn,          {.v = firefox} },
-  { Super,                      XK_e,       spawn,          SHCMD("nemo") },
-  { Super,                      XK_c,       spawn,          SHCMD("linuxqq") },
-  { Super,                      XK_d,       spawn,          SHCMD("obsidian") },
+  { Super,                      XK_Return,      spawn,          {.v = termcmd} },
+  { Super|ShiftMask,            XK_Return,      spawn,          {.v = toggle_terminal} },
+  { Super,                      XK_q,           spawn,          {.v = firefox} },
+  { Super,                      XK_e,           spawn,          SHCMD("nemo") },
+  { Super,                      XK_c,           spawn,          SHCMD("linuxqq") },
+  { Super,                      XK_d,           spawn,          SHCMD("obsidian") },
   /* launcher */
-  { Altkey,                     XK_c,       spawn,          {.v = rofi} },
-	{ Super,                      XK_p,       spawn,          {.v = dmenucmd } },
+  { Altkey,                     XK_c,           spawn,          {.v = rofi} },
+	{ Super,                      XK_p,           spawn,          {.v = dmenucmd } },
   /* status bar */
-	{ Super,                      XK_b,       togglebar,      {0} },
+	{ Super,                      XK_b,           togglebar,      {0} },
   /* shortcuts */
-  { Super,                      XK_u,       spawn,          SHCMD(prtsr_full) },
-  { Super|ShiftMask,            XK_u,       spawn,          SHCMD(prtsr) },
+  { Super,                      XK_u,           spawn,          SHCMD(prtsr_full) },
+  { Super|ShiftMask,            XK_u,           spawn,          SHCMD(prtsr) },
   /* print screen */
-  { 0,    XK_3270_PrintScreen,              spawn, SHCMD("scrot")},     // 截屏
+  { 0,    XK_3270_PrintScreen,                  spawn,          SHCMD("scrot")},     // 截屏
   /* media buttiono */
-  { 0,                          XF86XK_MonBrightnessDown,     spawn,          SHCMD(light_down) },
-  { 0,                          XF86XK_MonBrightnessUp,       spawn,          SHCMD(light_up) },
-  { 0,                          XF86XK_AudioLowerVolume,      spawn,          SHCMD(vol_down) },
-  { 0,                          XF86XK_AudioMute,             spawn,          SHCMD(vol_toggle) },
-  { 0,                          XF86XK_AudioRaiseVolume,      spawn,          SHCMD(vol_up) },
-  { 0,                          XF86XK_AudioPrev,             spawn,          SHCMD(song_prev) },
-  { 0,                          XF86XK_AudioPlay,             spawn,          SHCMD(song_toggle) },
-  { 0,                          XF86XK_AudioNext,             spawn,          SHCMD(song_next) },
-  { Altkey,                     XK_F11,                       spawn,          SHCMD(taggle_wallpaper) },
-  { 0,                          XF86XK_Calculator,            spawn,          SHCMD("qalculate-gtk") },
-  { 0,                          XF86XK_Launch2,               spawn,          SHCMD("obs") },
+  { 0,            XF86XK_MonBrightnessDown,     spawn,          SHCMD(light_down) },
+  { 0,            XF86XK_MonBrightnessUp,       spawn,          SHCMD(light_up) },
+  { 0,            XF86XK_AudioLowerVolume,      spawn,          SHCMD(vol_down) },
+  { 0,            XF86XK_AudioMute,             spawn,          SHCMD(vol_toggle) },
+  { 0,            XF86XK_AudioRaiseVolume,      spawn,          SHCMD(vol_up) },
+  { 0,            XF86XK_AudioPrev,             spawn,          SHCMD(song_prev) },
+  { 0,            XF86XK_AudioPlay,             spawn,          SHCMD(song_toggle) },
+  { 0,            XF86XK_AudioNext,             spawn,          SHCMD(song_next) },
+  { Altkey,       XK_F11,                       spawn,          SHCMD(taggle_wallpaper) },
+  { 0,            XF86XK_Calculator,            spawn,          SHCMD("qalculate-gtk") },
+  { 0,            XF86XK_Launch2,               spawn,          SHCMD("obs") },
   /* client */
-	{ Altkey|ShiftMask,               XK_q,       killclient,       {0} },
-	{ Altkey|ShiftMask,               XK_Return,  zoom,             {0} },
-  { Altkey,                         XK_j,       focusstack,       {.i = +1} },
-  { Altkey,                         XK_k,       focusstack,       {.i = -1} },
-  { Altkey|ShiftMask,               XK_j,       movestack,        {.i = +1} },
-  { Altkey|ShiftMask,               XK_k,       movestack,        {.i = -1} },
-	{ Altkey|ShiftMask,               XK_h,       setmfact,         {.f = -0.05} },
-	{ Altkey|ShiftMask,               XK_l,       setmfact,         {.f = +0.05} },
-  { Altkey|ShiftMask,               XK_space,   togglefloating,   {0} },
-  { Altkey,                         XK_f,       togglefullscreen, {0} },
-  { Altkey,                         XK_m,       centerfloating,   {0} },
-	{ Super,                          XK_Tab,     view,             {0} },
-  /* { Altkey,                         XK_e,       hidewin,          {0} }, */
-  /* { Altkey|ShiftMask,               XK_e,       restorewin,       {0} }, */
-  /* { Altkey,                         XK_o,       hideotherwins,    {0} }, */
-  /* { Altkey|ShiftMask,               XK_o,       restoreotherwins, {0} }, */
+	{ Altkey|ShiftMask,           XK_q,           killclient,              {0} },
+	{ Altkey|ShiftMask,           XK_Return,      zoom,                    {0} },
+  { Altkey,                     XK_j,           focusstack,              {.i = +1} },
+  { Altkey,                     XK_k,           focusstack,              {.i = -1} },
+  { Altkey|ShiftMask,           XK_j,           movestack,               {.i = +1} },
+  { Altkey|ShiftMask,           XK_k,           movestack,               {.i = -1} },
+	{ Altkey|ShiftMask,           XK_h,           setmfact,                {.f = -0.05} },
+	{ Altkey|ShiftMask,           XK_l,           setmfact,                {.f = +0.05} },
+  { Altkey|ShiftMask,           XK_space,       togglefloating,          {0} },
+  { Altkey,                     XK_f,           togglefullscreen,        {0} },
+  { Altkey,                     XK_m,           centerfloating,          {0} },
+  { Altkey,                     XK_t,           togglealwaysontop,       {0} },
+	{ Super,                      XK_Tab,         view,                    {0} },
+  { Altkey,                     XK_e,       hidewin,                     {0} },
+  { Altkey|ShiftMask,           XK_e,       restorewin,                  {0} },
+  { Altkey,                     XK_o,       hideotherwins,               {0} },
+  { Altkey|ShiftMask,           XK_o,       restoreotherwins,            {0} },
 
   /* layout */
 	{ Super,                      XK_t,       setlayout,      {.v = &layouts[0]} },
