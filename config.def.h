@@ -58,30 +58,30 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
-	{ "mpv",      NULL,       NULL,       0,            1,           -1 },
-	{ "obsidian", NULL,       NULL,       0,            1,           -1 },
-	{ "Nemo",     NULL,       NULL,       0,            1,           -1 },
-	{ "QQ",       NULL,       NULL,       0,            1,           -1 },
-	{ "Telegram-Desktop",     NULL,       NULL,       0,            1,           -1 },
-	{ "Gpick",    NULL,       NULL,       0,            1,           -1 },
-	{ "TelegramDesktop",     NULL,       NULL,       0,            1,           -1 },
-	{ "kitty",    NULL,       NULL,       0,            1,           -1 },
-	/* { "org.wezfurlong.wezterm",     NULL,       NULL,       0,            1,           -1 }, */
-	{ "sdlpal-linux",     NULL,       NULL,       0,            1,           -1 },
-	{ "Citra",     NULL,       NULL,       0,            1,           -1 },
-	{ "Sxiv",     NULL,       NULL,       0,            1,           -1 },
-	{ "feh",      NULL,       NULL,       0,            1,           -1 },
-	{ "Qalculate-gtk",     NULL,       NULL,       0,            1,           -1 },
-	{ "xdman",    NULL,       NULL,       0,            1,           -1 },
-	{ "Blueman-manager",     NULL,       NULL,       0,            1,           -1 },
-	{ "copyq",    NULL,       NULL,       0,            1,           -1 },
-	{ "Xmind",    NULL,       NULL,       0,            1,           -1 },
-	{ "KeePassXC",NULL,       NULL,       0,            1,           -1 },
-	{ "Com.github.xournalpp.xournalpp",     NULL,       NULL,       0,            1,           -1 },
-  { "fcitx5-config-qt", NULL, NULL, 0, 1, -1 },
+	/* class                            instance    title       tags mask     isfloating    monitor */
+	{ "Gimp",                             NULL,       NULL,       0,            1,             -1 },
+	{ "Firefox",                          NULL,       NULL,       1 << 8,       0,             -1 },
+	{ "mpv",                              NULL,       NULL,       0,            1,             -1 },
+	{ "obsidian",                         NULL,       NULL,       0,            1,             -1 },
+	{ "Nemo",                             NULL,       NULL,       0,            1,             -1 },
+	{ "QQ",                               NULL,       NULL,       0,            1,             -1 },
+	{ "Telegram-Desktop",                 NULL,       NULL,       0,            1,             -1 },
+	{ "Gpick",                            NULL,       NULL,       0,            1,             -1 },
+	{ "TelegramDesktop",                  NULL,       NULL,       0,            1,             -1 },
+	{ "kitty",                            NULL,       NULL,       0,            1,             -1 },
+	/* { "org.wezfurlong.wezterm",           NULL,       NULL,       0,            1,             -1 }, */
+	{ "sdlpal-linux",                     NULL,       NULL,       0,            1,             -1 },
+	{ "Citra",                            NULL,       NULL,       0,            1,             -1 },
+	{ "Sxiv",                             NULL,       NULL,       0,            1,             -1 },
+	{ "feh",                              NULL,       NULL,       0,            1,             -1 },
+	{ "Qalculate-gtk",                    NULL,       NULL,       0,            1,             -1 },
+	{ "xdman",                            NULL,       NULL,       0,            1,             -1 },
+	{ "Blueman-manager",                  NULL,       NULL,       0,            1,             -1 },
+	{ "copyq",                            NULL,       NULL,       0,            1,             -1 },
+	{ "Xmind",                            NULL,       NULL,       0,            1,             -1 },
+	{ "KeePassXC",                        NULL,       NULL,       0,            1,             -1 },
+	{ "Com.github.xournalpp.xournalpp",   NULL,       NULL,       0,            1,             -1 },
+  { "fcitx5-config-qt",                 NULL,       NULL,       0,            1,             -1 },
 };
 
 /* layout(s) */
@@ -96,6 +96,8 @@ static const Layout layouts[] = {
 	/* { "><>",      NULL },    /1* no layout function means floating behavior *1/ */
 	{ "<./><",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
+  { "|M|",      centermaster },
+  { "<M>",      centerfloatingmaster },
 };
 
 #include "keysdefine.h"
