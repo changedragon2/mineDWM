@@ -94,10 +94,12 @@ static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[]=",      tile },    /* first entry is default */
 	/* { "><>",      NULL },    /1* no layout function means floating behavior *1/ */
-	{ "<./><",      NULL },    /* no layout function means floating behavior */
+	{ "<./><",    NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
   { "|M|",      centermaster },
   { "<M>",      centerfloatingmaster },
+  { "TTT",      bstack },
+  { "===",      bstackhoriz },
 };
 
 #include "keysdefine.h"
