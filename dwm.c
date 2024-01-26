@@ -93,7 +93,7 @@ struct Client {
 	int basew, baseh, incw, inch, maxw, maxh, minw, minh, hintsvalid;
 	int bw, oldbw;
 	unsigned int tags;
-	int isfixed, isfloating, isalwaysontop, isurgent, neverfocus, oldstate, isfullscreen;
+	int isfixed, isfloating, isalwaysontop, ismaximized, isurgent, neverfocus, oldstate, isfullscreen;
 	Client *next;
 	Client *snext;
 	Monitor *mon;
@@ -216,10 +216,12 @@ static void spawn(const Arg *arg);
 static void tag(const Arg *arg);
 static void tagmon(const Arg *arg);
 static void tile(Monitor *m);
+static void togglealwaysontop(const Arg *arg);
 static void togglebar(const Arg *arg);
 static void togglefloating(const Arg *arg);
-static void togglealwaysontop(const Arg *arg);
 static void togglefullscreen(const Arg *arg);
+static void togglehalfside(const Arg *arg);
+static void togglemaximize(const Arg *arg);
 static void centerfloating(const Arg *arg);
 static void toggletag(const Arg *arg);
 static void toggleview(const Arg *arg);
@@ -1131,6 +1133,7 @@ manage(Window w, XWindowAttributes *wa)
 	updatewmhints(c);
 	XSelectInput(dpy, w, EnterWindowMask|FocusChangeMask|PropertyChangeMask|StructureNotifyMask);
 	grabbuttons(c, 0);
+  c->ismaximized = 0;
 	if (!c->isfloating)
 		c->isfloating = c->oldstate = trans != None || c->isfixed;
 	if (c->isfloating)
@@ -1874,10 +1877,49 @@ togglefullscreen(const Arg *arg)
     arrange(selmon);
   }
 }
+
+void
+togglehalfside(const Arg *arg)
+{
+  if (!selmon->sel || selmon->sel->isfixed || selmon->sel->isfullscreen)
+    return;
+  if (!selmon->sel->isfloating && selmon->lt[selmon->sellt]->arrange)
+    return;
+  if (arg->i == 0){
+    resizeclient(selmon->sel,
+        selmon->sel->oldx, selmon->sel->oldy, selmon->sel->oldw, selmon->sel->oldh);
+      selmon->sel->ismaximized = False;
+  }
+  else {
+    if (arg->i > 0)
+      resizeclient(selmon->sel, selmon->mw / 2, bh, selmon->mw / 2, selmon->mh - bh);
+    else
+      resizeclient(selmon->sel, 0, bh, selmon->mw / 2, selmon->mh - bh);
+  }
+}
+
+void
+togglemaximize(const Arg *arg)
+{
+  if (!selmon->sel || selmon->sel->isfixed || selmon->sel->isfullscreen)
+    return;
+  if (selmon->sel->isfloating || !selmon->lt[selmon->sellt]->arrange){
+    if (!selmon->sel->ismaximized) {
+      resizeclient(selmon->sel, 0, bh, selmon->mw, selmon->mh - bh);
+      selmon->sel->ismaximized = True;
+    }
+    else {
+      resizeclient(selmon->sel,
+          selmon->sel->oldx, selmon->sel->oldy, selmon->sel->oldw, selmon->sel->oldh);
+      selmon->sel->ismaximized = False;
+    }
+  }
+}
+
 void
 centerfloating(const Arg *arg)
 {
-  if (!selmon->sel || selmon->sel->isfullscreen)
+  if (!selmon->sel || selmon->sel->isfullscreen || selmon->sel->ismaximized)
     return;
   if (selmon->sel->isfloating || selmon->lt[selmon->sellt]->arrange == NULL)
     resizeclient(selmon->sel,
@@ -1885,9 +1927,6 @@ centerfloating(const Arg *arg)
         (selmon->mh - selmon->sel->h) / 2,
         selmon->sel->w,
         selmon->sel->h);
-  else
-    return;
-  arrange(selmon->sel->mon);
 }
 
 void

@@ -101,23 +101,29 @@ static const Key keys[] = {
   { 0,            XF86XK_Calculator,            spawn,          SHCMD("qalculate-gtk") },
   { 0,            XF86XK_Launch2,               spawn,          SHCMD("obs") },
   /* client */
-	{ Altkey|ShiftMask,           XK_q,           killclient,              {0} },
-	{ Altkey|ShiftMask,           XK_Return,      zoom,                    {0} },
-  { Altkey,                     XK_j,           focusstack,              {.i = +1} },
-  { Altkey,                     XK_k,           focusstack,              {.i = -1} },
-  { Altkey|ShiftMask,           XK_j,           movestack,               {.i = +1} },
-  { Altkey|ShiftMask,           XK_k,           movestack,               {.i = -1} },
-	{ Altkey|ShiftMask,           XK_h,           setmfact,                {.f = -0.05} },
-	{ Altkey|ShiftMask,           XK_l,           setmfact,                {.f = +0.05} },
-  { Altkey|ShiftMask,           XK_space,       togglefloating,          {0} },
-  { Altkey,                     XK_f,           togglefullscreen,        {0} },
-  { Altkey,                     XK_m,           centerfloating,          {0} },
-  { Altkey,                     XK_t,           togglealwaysontop,       {0} },
-	{ Super,                      XK_Tab,         view,                    {0} },
-  /* { Altkey,                     XK_e,       hidewin,                     {0} }, */
-  /* { Altkey|ShiftMask,           XK_e,       restorewin,                  {0} }, */
-  /* { Altkey,                     XK_o,       hideotherwins,               {0} }, */
-  /* { Altkey|ShiftMask,           XK_o,       restoreotherwins,            {0} }, */
+	{ Altkey|ShiftMask,           XK_q,           killclient,             {0} },
+	{ Altkey|ShiftMask,           XK_Return,      zoom,                   {0} },
+  { Altkey,                     XK_j,           focusstack,             {.i = +1} },
+  { Altkey,                     XK_k,           focusstack,             {.i = -1} },
+  { Altkey|ShiftMask,           XK_j,           movestack,              {.i = +1} },
+  { Altkey|ShiftMask,           XK_k,           movestack,              {.i = -1} },
+	{ Altkey|ShiftMask,           XK_h,           setmfact,               {.f = -0.05} },
+	{ Altkey|ShiftMask,           XK_l,           setmfact,               {.f = +0.05} },
+  { Altkey|ShiftMask,           XK_space,       togglefloating,         {0} },
+  { Altkey,                     XK_f,           togglefullscreen,       {0} },
+  { Altkey,                     XK_m,           centerfloating,         {0} },
+  { Altkey,                     XK_t,           togglealwaysontop,      {0} },
+  { Altkey,                     XK_u,           togglemaximize,         {0} },
+  { Super,                      XK_Up,          togglemaximize,         {0} },
+  { Altkey,                     XK_r,           togglehalfside,         {.i = 0} },
+  { Super,                      XK_Down,        togglehalfside,         {.i = 0} },
+  { Super,                      XK_Left,        togglehalfside,         {.i = -1} },
+  { Super,                      XK_Right,       togglehalfside,         {.i = +1} },
+	{ Super,                      XK_Tab,         view,                   {0} },
+  /* { Altkey,                     XK_e,       hidewin,                    {0} }, */
+  /* { Altkey|ShiftMask,           XK_e,       restorewin,                 {0} }, */
+  /* { Altkey,                     XK_o,       hideotherwins,              {0} }, */
+  /* { Altkey|ShiftMask,           XK_o,       restoreotherwins,           {0} }, */
 
   /* layout */
 	{ Super,                      XK_t,       setlayout,      {.v = &layouts[0]} },
