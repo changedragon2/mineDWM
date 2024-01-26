@@ -806,9 +806,9 @@ drawbar(Monitor *m)
 			drw_setscheme(drw, scheme[m == selmon ? SchemeTitleSel : SchemeTitleNorm]);
 			drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0);
 			if (m->sel->isfloating){
-				drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
+				drw_rect(drw, x + boxs, boxs + 3, boxw, boxw, m->sel->isfixed, 0);
         if (m->sel->isalwaysontop)
-          drw_rect(drw, x + boxs, bh - boxw, boxw, boxw, 0, 0);
+          drw_rect(drw, x, boxs, boxw + 2*boxs, 1, 0, 0);
       }
 		} else {
 			drw_setscheme(drw, scheme[SchemeTitleNorm]);
@@ -1879,7 +1879,7 @@ centerfloating(const Arg *arg)
 {
   if (!selmon->sel || selmon->sel->isfullscreen)
     return;
-  if (selmon->sel->isfloating || !strcmp(selmon->lt[selmon->sellt]->symbol, "<./><"))
+  if (selmon->sel->isfloating || selmon->lt[selmon->sellt]->arrange == NULL)
     resizeclient(selmon->sel,
         (selmon->mw - selmon->sel->w) / 2,
         (selmon->mh - selmon->sel->h) / 2,
