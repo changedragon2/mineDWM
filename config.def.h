@@ -25,6 +25,7 @@ static const char *colors[][3]      = {
   [SchemeTagsSel]   = { col_gray4,      col_olive,        col_chartreuse },
   [SchemeTitleNorm] = { col_gray3,      col_gray1,        col_gray2 },
   [SchemeTitleSel]  = { col_gray4,      col_orange,       col_orange },
+  [SchemeTitleHide] = { col_cyan,       col_gray1,        col_gray1 },
   [SchemeStatus]    = { col_gray3,      col_gray1,        col_gray2 },
 };
 static const unsigned int alphas[][3] = {
@@ -35,6 +36,7 @@ static const unsigned int alphas[][3] = {
   [SchemeTagsSel]   = { OPAQUE,         baralpha,         borderalpha },
   [SchemeTitleNorm] = { OPAQUE,         baralpha,         borderalpha },
   [SchemeTitleSel]  = { OPAQUE,         baralpha,         borderalpha },
+  [SchemeTitleHide] = { OPAQUE,         baralpha,         borderalpha },
   [SchemeStatus]    = { OPAQUE,         baralpha,         borderalpha },
   /* [SchemeStatus]    = { col_gray4,  col_gray1,  col_gray2   }, */
   /* [SchemeTitleNorm] = { OPAQUE, baralpha, borderalpha }, */
@@ -59,29 +61,31 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class                            instance    title       tags mask     isfloating    isalwaysontop    monitor */
-	{ "Gimp",                             NULL,       NULL,       0,            1,               0,             -1 },
-	{ "Firefox",                          NULL,       NULL,       1 << 8,       0,               0,             -1 },
-	{ "mpv",                              NULL,       NULL,       0,            1,               1,             -1 },
-	{ "obsidian",                         NULL,       NULL,       0,            1,               0,             -1 },
-	{ "Nemo",                             NULL,       NULL,       0,            1,               0,             -1 },
-	{ "QQ",                               NULL,       NULL,       0,            1,               0,             -1 },
-	{ "Telegram-Desktop",                 NULL,       NULL,       0,            1,               0,             -1 },
-	{ "Gpick",                            NULL,       NULL,       0,            1,               0,             -1 },
-	{ "TelegramDesktop",                  NULL,       NULL,       0,            1,               0,             -1 },
-	{ "kitty",                            NULL,       NULL,       0,            1,               0,             -1 },
-	/* { "org.wezfurlong.wezterm",           NULL,       NULL,       0,            1,               0,             -1 }, */
-	{ "sdlpal-linux",                     NULL,       NULL,       0,            1,               0,             -1 },
-	{ "Citra",                            NULL,       NULL,       0,            1,               0,             -1 },
-	{ "Sxiv",                             NULL,       NULL,       0,            1,               0,             -1 },
-	{ "feh",                              NULL,       NULL,       0,            1,               0,             -1 },
-	{ "Qalculate-gtk",                    NULL,       NULL,       0,            1,               0,             -1 },
-	{ "xdman",                            NULL,       NULL,       0,            1,               0,             -1 },
-	{ "Blueman-manager",                  NULL,       NULL,       0,            1,               0,             -1 },
-	{ "copyq",                            NULL,       NULL,       0,            1,               0,             -1 },
-	{ "Xmind",                            NULL,       NULL,       0,            1,               0,             -1 },
-	{ "KeePassXC",                        NULL,       NULL,       0,            1,               0,             -1 },
-	{ "Com.github.xournalpp.xournalpp",   NULL,       NULL,       0,            1,               0,             -1 },
-  { "fcitx5-config-qt",                 NULL,       NULL,       0,            1,               0,             -1 },
+	{ "Gimp",                             NULL,       NULL,       0,            1,                0,            -1 },
+	{ "Firefox",                          NULL,       NULL,       1 << 8,       0,                0,            -1 },
+	{ "mpv",                              NULL,       NULL,       0,            1,                1,            -1 },
+	{ "obsidian",                         NULL,       NULL,       0,            1,                0,            -1 },
+	{ "Nemo",                             NULL,       NULL,       0,            1,                0,            -1 },
+	{ "QQ",                               NULL,       NULL,       0,            1,                0,            -1 },
+	{ "Telegram-Desktop",                 NULL,       NULL,       0,            1,                0,            -1 },
+	{ "Gpick",                            NULL,       NULL,       0,            1,                0,            -1 },
+	{ "TelegramDesktop",                  NULL,       NULL,       0,            1,                0,            -1 },
+	{ "kitty",                            NULL,       NULL,       0,            1,                0,            -1 },
+	{ "org.wezfurlong.wezterm",           NULL,       NULL,       0,            0,                0,            -1 },
+	{ "sdlpal-linux",                     NULL,       NULL,       0,            1,                0,            -1 },
+	{ "Citra",                            NULL,       NULL,       0,            1,                0,            -1 },
+	{ "Sxiv",                             NULL,       NULL,       0,            1,                0,            -1 },
+	{ "feh",                              NULL,       NULL,       0,            1,                0,            -1 },
+	{ "Qalculate-gtk",                    NULL,       NULL,       0,            1,                0,            -1 },
+	{ "xdman",                            NULL,       NULL,       0,            1,                0,            -1 },
+	{ "Blueman-manager",                  NULL,       NULL,       0,            1,                0,            -1 },
+	{ "copyq",                            NULL,       NULL,       0,            1,                0,            -1 },
+	{ "Xmind",                            NULL,       NULL,       0,            1,                0,            -1 },
+	{ "KeePassXC",                        NULL,       NULL,       0,            1,                0,            -1 },
+  { "Com.github.xournalpp.xournalpp",   NULL,       NULL,       0,            1,                0,            -1 },
+  { "fcitx5-config-qt",                 NULL,       NULL,       0,            1,                0,            -1 },
+  { "Anki",                             NULL,       NULL,       0,            1,                0,            -1 },
+  { "gnome-text-editor",                NULL,       NULL,       0,            1,                0,            -1 },
 };
 
 /* layout(s) */

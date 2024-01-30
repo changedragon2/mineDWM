@@ -103,8 +103,10 @@ static const Key keys[] = {
   /* client */
 	{ Altkey|ShiftMask,           XK_q,           killclient,             {0} },
 	{ Altkey|ShiftMask,           XK_Return,      zoom,                   {0} },
-  { Altkey,                     XK_j,           focusstack,             {.i = +1} },
-  { Altkey,                     XK_k,           focusstack,             {.i = -1} },
+  { Altkey,                     XK_j,           focusvisstack,          {.i = +1} },
+  { Altkey,                     XK_k,           focusvisstack,          {.i = -1} },
+  { Altkey,                     XK_h,           focushidstack,          {.i = +1} },
+  { Altkey,                     XK_l,           focushidstack,          {.i = -1} },
   { Altkey|ShiftMask,           XK_j,           movestack,              {.i = +1} },
   { Altkey|ShiftMask,           XK_k,           movestack,              {.i = -1} },
 	{ Altkey|ShiftMask,           XK_h,           setmfact,               {.f = -0.05} },
@@ -120,11 +122,10 @@ static const Key keys[] = {
   { Super,                      XK_Left,        togglehalfside,         {.i = -1} },
   { Super,                      XK_Right,       togglehalfside,         {.i = +1} },
 	{ Super,                      XK_Tab,         view,                   {0} },
-  /* { Altkey,                     XK_e,       hidewin,                    {0} }, */
-  /* { Altkey|ShiftMask,           XK_e,       restorewin,                 {0} }, */
-  /* { Altkey,                     XK_o,       hideotherwins,              {0} }, */
-  /* { Altkey|ShiftMask,           XK_o,       restoreotherwins,           {0} }, */
-
+  { Altkey,                     XK_e,           hidesel,                {0} },
+  { Altkey|ShiftMask,           XK_e,           showsel,                {0} },
+  { Altkey,                     XK_o,           showlast,               {0} },
+  { Altkey|ShiftMask,           XK_o,           showall,                {0} },
   /* layout */
 	{ Super,                      XK_t,       setlayout,      {.v = &layouts[0]} },
 	{ Super,                      XK_f,       setlayout,      {.v = &layouts[1]} },
@@ -132,7 +133,7 @@ static const Key keys[] = {
 	{ Super,                      XK_p,       cyclelayout,            {.i = -1 } },
 	{ Super,                      XK_n,       cyclelayout,            {.i = +1 } },
   { Super|ShiftMask,            XK_space,   setlayout,                     {0} },
-
+  /* others */
 	{ Altkey|ShiftMask,            XK_i,          incnmaster,             {.i = +1 } },
 	{ Altkey|ShiftMask,            XK_d,          incnmaster,             {.i = -1 } },
 	{ Super,                       XK_0,          view,                   {.ui = ~0 } },
@@ -159,6 +160,7 @@ static const Button buttons[] = {
 	/* click                event mask       button          function        argument */
 	{ ClkLtSymbol,          0,               Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,               Button3,        setlayout,      {.v = &layouts[2]} },
+  { ClkWinTitle,          0,               Button1,        togglewin,      {0} },
 	{ ClkWinTitle,          0,               Button2,        zoom,           {0} },
 	{ ClkStatusText,        0,               Button2,        spawn,          {.v = termcmd } },
 	{ ClkClientWin,         Super,           Button1,        movemouse,      {0} },
