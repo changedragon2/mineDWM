@@ -1886,8 +1886,10 @@ showlast(const Arg *arg)
     for (tmp = selmon->sel; tmp; tmp = tmp->next)
       if (tmp->ishide)
         c = tmp;
-  if (c)
+  if (c){
     showwin(c);
+    focus(c);
+  }
   restack(selmon);
 }
 
@@ -2024,10 +2026,14 @@ togglefloating(const Arg *arg)
     if (!selmon->lt[selmon->sellt]->arrange)
       resize(selmon->sel, selmon->sel->x, selmon->sel->y, selmon->sel->w, selmon->sel->h, 0);
     else
+      /* resize(selmon->sel, */
+      /*   (selmon->mw - selmon->sel->w) / 2, */
+      /*   (selmon->mh + bh - selmon->sel->h) / 2, */
+			/* selmon->sel->w, selmon->sel->h, 0); */
       resize(selmon->sel,
-        (selmon->mw - selmon->sel->w) / 2,
-        (selmon->mh - selmon->sel->h) / 2,
-			selmon->sel->w, selmon->sel->h, 0);
+        selmon->mw / 6, selmon->mh / 6,
+        4*(selmon->mw / 6), 4*(selmon->mh / 6),
+        0);
   else
     selmon->sel->isalwaysontop = 0;
 	arrange(selmon);
