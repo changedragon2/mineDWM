@@ -1880,11 +1880,11 @@ showlast(const Arg *arg)
 {
   Client *c = NULL, *tmp = NULL;
   for (tmp = selmon->clients; tmp && tmp != selmon->sel; tmp = tmp->next)
-    if (tmp->ishide)
+    if (tmp->ishide && ISVISIBLE(tmp))    /* if (tmp->ishide && tmp->tags == selmon->tagset[selmon->seltags]) */
       c = tmp;
   if (!c)
     for (tmp = selmon->sel; tmp; tmp = tmp->next)
-      if (tmp->ishide)
+      if (tmp->ishide && ISVISIBLE(tmp))  /* if (tmp->ishide && tmp->tags == selmon->tagset[selmon->seltags]) */
         c = tmp;
   if (c){
     showwin(c);
