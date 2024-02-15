@@ -142,6 +142,8 @@ static const Key keys[] = {
 	{ Super,                       XK_period,     focusmon,               {.i = +1 } },
 	{ Super|ShiftMask,             XK_comma,      tagmon,                 {.i = -1 } },
 	{ Super|ShiftMask,             XK_period,     tagmon,                 {.i = +1 } },
+  { ControlMask,                  XK_Left,      viewshift,              {.i = -1 } },
+  { ControlMask,                  XK_Right,     viewshift,              {.i = +1 } },
 	TAGKEYS(                        XK_1,                                  0)
 	TAGKEYS(                        XK_2,                                  1)
 	TAGKEYS(                        XK_3,                                  2)

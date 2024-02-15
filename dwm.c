@@ -250,6 +250,7 @@ static void updatetitle(Client *c);
 static void updatewindowtype(Client *c);
 static void updatewmhints(Client *c);
 static void view(const Arg *arg);
+static void viewshift(const Arg *arg);
 static Client *wintoclient(Window w);
 static Monitor *wintomon(Window w);
 static int xerror(Display *dpy, XErrorEvent *ee);
@@ -2663,6 +2664,26 @@ view(const Arg *arg)
   selmon->nmaster = selmon->pertag->nmasters[selmon->pertag->curtag];
 	focus(NULL);
 	arrange(selmon);
+}
+
+void
+viewshift(const Arg *arg)
+{
+  Arg ntag;
+  if (!arg)
+    return;
+  ntag.ui = selmon->tagset[selmon->seltags];
+  if (arg->i > 0)
+    if (ntag.ui == 1 << (LENGTH(tags) - 1))   /* 当前为最后一个标签，跳到第一个标签 */
+      ntag.ui = 1;
+    else
+      ntag.ui <<= 1;
+  else
+    if (ntag.ui == 1)   /* 当前为第一个标签，跳到最后一个标签 */
+      ntag.ui <<= (LENGTH(tags) -1);
+    else
+      ntag.ui >>= 1;
+  view(&ntag);
 }
 
 Client *
