@@ -2258,11 +2258,14 @@ togglehalfside(const Arg *arg)
 void
 togglemaximize(const Arg *arg)
 {
+  int curbh = 0;
   if (!selmon->sel || selmon->sel->isfixed || selmon->sel->isfullscreen)
     return;
   if (selmon->sel->isfloating || !selmon->lt[selmon->sellt]->arrange){
     if (!selmon->sel->ismaximized) {
-      resizeclient(selmon->sel, 0, bh, selmon->mw, selmon->mh - bh);
+      if (selmon->showbar)
+        curbh = bh;
+      resizeclient(selmon->sel, 0, curbh, selmon->mw, selmon->mh - curbh);
       selmon->sel->ismaximized = True;
     }
     else {
