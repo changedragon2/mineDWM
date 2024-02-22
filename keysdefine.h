@@ -118,7 +118,7 @@ static const Key keys[] = {
   { Altkey,                     XK_u,           togglemaximize,         {0} },
   { Super,                      XK_Up,          togglemaximize,         {0} },
   { Altkey,                     XK_r,           togglehalfside,         {.i = 0} },
-  { Super,                      XK_Down,        togglehalfside,         {.i = 0} },
+  { Super,                      XK_Down,        hidesel,                {0} },
   { Super,                      XK_Left,        togglehalfside,         {.i = -1} },
   { Super,                      XK_Right,       togglehalfside,         {.i = +1} },
 	{ Super,                      XK_Tab,         view,                   {0} },
