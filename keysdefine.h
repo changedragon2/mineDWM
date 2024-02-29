@@ -47,7 +47,8 @@ static const char *dmenucmd[] = {
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *toggle_terminal[] = { "wezterm", NULL };
 static const char *firefox[] = { "firefox", NULL };
-static const char *rofi[] = { "rofi", "-show", "drun" };
+static const char *rofi[] = { "rofi", "-show", "drun", "NULL" };
+static const char *launcher[] = { "rofi", "-config", "~/.config/rofi/launcher.rasi", "-show", "drun", "NULL" };
 /* print screen */
 static const char prtsr[] = "maim -s ~/Pictures/Screenshots/$(date '+%Y-%m-%d-%H:%M:%S').png";
 static const char prtsr_full[] = "maim  ~/Pictures/Screenshots/$(date '+%Y-%m-%d-%H:%M:%S').png";
@@ -80,7 +81,7 @@ static const Key keys[] = {
   { Super,                      XK_d,           spawn,          SHCMD("obsidian") },
   /* launcher */
   { Altkey,                     XK_c,           spawn,          {.v = rofi} },
-	{ Super,                      XK_p,           spawn,          {.v = dmenucmd } },
+	{ Super,                      XK_r,           spawn,          {.v = launcher } },
   /* status bar */
 	{ Super,                      XK_b,           togglebar,      {0} },
   /* shortcuts */
